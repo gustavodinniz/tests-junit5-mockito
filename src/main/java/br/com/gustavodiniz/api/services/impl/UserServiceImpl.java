@@ -3,6 +3,7 @@ package br.com.gustavodiniz.api.services.impl;
 import br.com.gustavodiniz.api.models.UserModel;
 import br.com.gustavodiniz.api.repositories.UserRepository;
 import br.com.gustavodiniz.api.services.UserService;
+import br.com.gustavodiniz.api.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserModel findById(Integer id) {
         Optional<UserModel> userModelOptional = userRepository.findById(id);
-        return userModelOptional.orElse(null);
+        return userModelOptional.orElseThrow(() -> new ObjectNotFoundException("User not found."));
     }
 }
