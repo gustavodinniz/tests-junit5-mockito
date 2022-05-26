@@ -3,12 +3,11 @@ package br.com.gustavodiniz.api.services.impl;
 import br.com.gustavodiniz.api.dtos.UserDTO;
 import br.com.gustavodiniz.api.models.UserModel;
 import br.com.gustavodiniz.api.repositories.UserRepository;
-import org.junit.jupiter.api.Assertions;
+import br.com.gustavodiniz.api.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -57,6 +56,18 @@ class UserServiceImplTest {
         assertEquals(ID, response.getId());
         assertEquals(NAME, response.getName());
         assertEquals(EMAIL, response.getEmail());
+    }
+
+    @Test
+    void whenFindByIdThenReturnAnObjectNotFoundException() {
+        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException("User not found."));
+
+        try {
+            service.findById(ID);
+        } catch (Exception exception) {
+            assertEquals(ObjectNotFoundException.class, exception.getClass());
+            assertEquals("User not found.", exception.getMessage());
+        }
     }
 
     @Test
