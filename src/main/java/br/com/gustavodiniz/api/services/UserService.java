@@ -11,4 +11,6 @@ public interface UserService {
     List<UserModel> findAll();
 
     UserModel create(UserDTO userDTO);
+
+    UserModel update(UserDTO userDTO);
 }
