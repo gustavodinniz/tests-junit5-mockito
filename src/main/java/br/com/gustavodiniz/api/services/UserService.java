@@ -13,4 +13,6 @@ public interface UserService {
     UserModel create(UserDTO userDTO);
 
     UserModel update(UserDTO userDTO);
+
+    void delete(Integer id);
 }
